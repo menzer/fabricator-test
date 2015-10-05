@@ -98,6 +98,8 @@ selectNodeVersion () {
 # Deployment
 # ----------
 
+# TODO: Replace local node_modules path with `npm bin`
+
 echo Handling node.js deployment.
 
 # 1. KuduSync
@@ -110,19 +112,25 @@ fi
 selectNodeVersion
 
 # 3. Install npm packages
-# if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
-#   cd "$DEPLOYMENT_TARGET"
-#   eval $NPM_CMD install --production
-#   exitWithMessageOnError "npm failed"
-#   cd - > /dev/null
-# fi
+if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
+  cd "$DEPLOYMENT_TARGET"
+  eval $NPM_CMD install npm@3.3.6
 
-3. Build static assets
+  # TODO: reassign NPM_CMD
+  # NPM_CMD=./node_modules/.bin/npm 
+  # eval $NPM_CMD install
+
+  # Use locally installed npm 3.3.6
+  ./node_modules/.bin/npm install
+  exitWithMessageOnError "npm failed"
+  cd - > /dev/null
+fi
+
+# 4. Build static assets
 cd "$DEPLOYMENT_TARGET"
-eval $NPM_CMD install -g gulp
-eval $NPM_CMD rebuild node-sass
-
-gulp
+# eval $NPM_CMD install -g gulp
+# eval $NPM_CMD rebuild node-sass
+./node_modules/.bin/npm gulp
 exitWithMessageOnError "build failed"
 cd - > /dev/null
 
