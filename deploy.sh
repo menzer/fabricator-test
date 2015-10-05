@@ -117,12 +117,12 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
-# 3. Build static assets
-# cd "$DEPLOYMENT_TARGET"
-# eval $NPM_CMD install -g gulp
-# gulp
-# exitWithMessageOnError "build failed"
-# cd - > /dev/null
+3. Build static assets
+cd "$DEPLOYMENT_TARGET"
+eval $NPM_CMD install -g gulp
+gulp
+exitWithMessageOnError "build failed"
+cd - > /dev/null
 
 ##################################################################################################################################
 
