@@ -98,8 +98,6 @@ selectNodeVersion () {
 # Deployment
 # ----------
 
-# TODO: Replace local node_modules path with `npm bin`
-
 echo Handling node.js deployment.
 
 # 1. KuduSync
@@ -111,15 +109,10 @@ fi
 # 2. Select node version
 selectNodeVersion
 
-# 3. Install npm packages
+# 3. Install npm packages with npm@3.3.6
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval $NPM_CMD install npm@3.3.6 -g
-
-  # TODO: reassign NPM_CMD
-  # NPM_CMD=./node_modules/.bin/npm
-  # eval $NPM_CMD install
-
   npm install
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
