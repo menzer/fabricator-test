@@ -114,14 +114,13 @@ selectNodeVersion
 # 3. Install npm packages
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install npm@3.3.6
+  eval $NPM_CMD install npm@3.3.6 -g
 
   # TODO: reassign NPM_CMD
-  # NPM_CMD=./node_modules/.bin/npm 
+  # NPM_CMD=./node_modules/.bin/npm
   # eval $NPM_CMD install
 
-  # Use locally installed npm 3.3.6
-  ./node_modules/.bin/npm install
+  npm install
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
@@ -130,7 +129,7 @@ fi
 cd "$DEPLOYMENT_TARGET"
 # eval $NPM_CMD install -g gulp
 # eval $NPM_CMD rebuild node-sass
-./node_modules/.bin/npm gulp
+npm run gulp
 exitWithMessageOnError "build failed"
 cd - > /dev/null
 
