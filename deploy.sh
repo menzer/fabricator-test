@@ -120,6 +120,8 @@ selectNodeVersion
 3. Build static assets
 cd "$DEPLOYMENT_TARGET"
 eval $NPM_CMD install -g gulp
+eval $NPM_CMD rebuild node-sass
+
 gulp
 exitWithMessageOnError "build failed"
 cd - > /dev/null
