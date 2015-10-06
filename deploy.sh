@@ -109,20 +109,18 @@ fi
 # 2. Select node version
 selectNodeVersion
 
-# 3. Install npm packages
-# if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
-#   cd "$DEPLOYMENT_TARGET"
-#   eval $NPM_CMD install --production
-#   exitWithMessageOnError "npm failed"
-#   cd - > /dev/null
-# fi
+# 3. Install npm packages with npm@3.3.6
+if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
+  cd "$DEPLOYMENT_TARGET"
+  eval $NPM_CMD install npm@3.3.6 -g
+  npm install
+  exitWithMessageOnError "npm failed"
+  cd - > /dev/null
+fi
 
-3. Build static assets
+# 4. Build static assets
 cd "$DEPLOYMENT_TARGET"
-eval $NPM_CMD install -g gulp
-eval $NPM_CMD rebuild node-sass
-
-gulp
+npm run gulp
 exitWithMessageOnError "build failed"
 cd - > /dev/null
 
